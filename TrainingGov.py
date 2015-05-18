@@ -25,6 +25,31 @@ class TrainingComponents(TrainingGovAPI):
     def __init__(self):
         self.client.set_options(wsse=TrainingGovAPI.security)
 
+    def search(self, filterTerm=None, searchCode=True, searchTitle=False):
+        request = self.client.factory.create('TrainingComponentSearchRequest')
+
+        #search term
+        request.Filter = filterTerm
+        
+        #searches by unit/qual/course code
+        request.SearchCode = searchCode
+
+        #searches by uniit/qual/course title
+        request.SearchTitle = searchTitle
+
+        #Filtering options for the types of components returned by a search
+        request.TrainingComponentTypes = [{
+            "IncludeAccreditedCourse" : 0,
+            "IncludeAccreditedCourseModule" : 0,
+            "IncludeQualification" : 0,
+            "IncludeSkillSet" : 0,
+            "IncludeTrainingPackage" : 0,
+            "IncludeUnit" : 1,
+            "IncludeUnitContextualisation" : 0
+        }]
+
+        return self.client.service.Search(request)
+
     def getDetails(self, code, showDeprecated=True):
         request = self.client.factory.create('TrainingComponentDetailsRequest')
 
