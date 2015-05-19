@@ -121,7 +121,7 @@ class TrainingComponents(TrainingGovAPI):
                     }
                 }
             else:
-                release["fiels"] = []
+                release["files"] = []
 
             releases.append(release)
         return releases    
